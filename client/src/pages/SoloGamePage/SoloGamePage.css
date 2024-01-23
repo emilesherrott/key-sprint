@@ -1,0 +1,43 @@
+#pages-sologame-page-game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#pages-sologame-page-input {
+    width: 50vw;
+    height: 30px;
+    border: 2px bold #000;
+    border-radius: 2px;
+}
+
+#pages-sologame-page-word-ol {
+    list-style-type: none;
+}
+
+.pages-sologame-page-word-li {
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+    padding: 8px;
+    margin: 4px;
+}
+
+.pages-sologame-page-word-li:nth-child(1) {
+    font-size: 60px;
+}
+
+.pages-sologame-page-word-li:nth-child(2) {
+    font-size: 50px;
+}
+
+.pages-sologame-page-word-li:nth-child(3) {
+    font-size: 40px;
+}
+
+.pages-sologame-page-word-li:nth-child(4) {
+    font-size: 30px;
+}
+
+.pages-sologame-page-word-li:nth-child(5) {
+    font-size: 25px;
+}
