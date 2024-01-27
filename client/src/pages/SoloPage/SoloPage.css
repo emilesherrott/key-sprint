@@ -1,18 +1,25 @@
+#pages-solopage-game-display {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
 #pages-solopage-buttons {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .pages-solopage-button {
-    max-width: 100px;
-    padding: 8px;
-    margin: 6px;
-    font-family: "Roboto", sans-serif;
-    background-color: #F99;
-    border: none;
+  max-width: 100px;
+  padding: 8px;
+  margin: 6px;
+  font-family: "Roboto", sans-serif;
+  background-color: #f99;
+  border: none;
 }
 
 .pages-solopage-button:hover {
-    cursor: pointer;
-    font-weight: 600;
+  cursor: pointer;
+  font-weight: 600;
 }

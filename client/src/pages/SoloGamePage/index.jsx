@@ -1,52 +1,71 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+import { Timer, SoloEndGameResults } from "../../components";
+
 import "./SoloGamePage.css";
 
 const SoloGamePage = ({ words }) => {
-  const [gameWords, setGameWords] = useState(words);
+  const [gameWords, setGameWords] = useState(words.slice(0, 5));
+  const [remainingWords, setRemainingWords] = useState(words.slice(5));
   const [input, setInput] = useState("");
   const [scoreWords, setScoreWords] = useState(0);
   const [misspeltWords, setMisspeltWords] = useState(0);
 
+  const [time, setTime] = useState(60);
+  const [timeStarted, setTimeStarted] = useState(false);
+  const [timeFinished, setTimeFinished] = useState(false);
+
   const handleChange = (event) => {
+    setTimeStarted(true);
     const value = event.target.value;
     setInput(value);
     if (value[value.length - 1] === " ") setInput("");
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === " ") {
-      let submission = event.target.value;
-      if (submission === gameWords[0]) {
-        setScoreWords((prevState) => prevState + 1);
-      } else {
-        setMisspeltWords((prevState) => prevState + 1);
+    if (time > 0) {
+      if (event.key === " ") {
+        let submission = event.target.value;
+        if (submission === gameWords[0]) {
+          setScoreWords((prevState) => prevState + 1);
+        } else {
+          setMisspeltWords((prevState) => prevState + 1);
+        }
+        setGameWords((prevWords) => {
+          const updatedWords = [...prevWords.slice(1)];
+          if (remainingWords.length > 0) {
+            updatedWords.push(remainingWords[0]);
+            setRemainingWords((prevRemaining) => [...prevRemaining.slice(1)]);
+          }
+          return updatedWords;
+        });
       }
-      let updatedGameWords = gameWords.slice(1);
-      setGameWords(updatedGameWords);
     }
-    console.log("scoreWords", scoreWords);
-    console.log("misspelt", misspeltWords);
-
-    const value = event.key;
     setInput(event.target.value);
   };
 
   return (
     <>
-      <section id="pages-sologame-page-game">
-          <input type="text" id="pages-sologame-page-input" value={input} placeholder={gameWords[0]} onChange={handleChange} onKeyDown={handleKeyDown} />
-        <ol id="pages-sologame-page-word-ol">
-          {gameWords.map((word, i) => {
-            return (
-              <li className="pages-sologame-page-word-li" key={i}>
-                {word}
-              </li>
-            );
-          })}
-        </ol>
-      </section>
+      {!timeFinished ? (
+        <>
+          <Timer time={time} setTime={setTime} timeStarted={timeStarted} setTimeFinished={setTimeFinished} />
+          <section id="pages-sologame-page-game">
+            <input type="text" id="pages-sologame-page-input" value={input} placeholder={gameWords[0]} onChange={handleChange} onKeyDown={handleKeyDown} />
+            <ol id="pages-sologame-page-word-ol">
+              {gameWords.map((word, i) => {
+                return (
+                  <li className="pages-sologame-page-word-li" key={i}>
+                    {word}
+                  </li>
+                );
+              })}
+            </ol>
+          </section>
+        </>
+      ) : (
+        <SoloEndGameResults scoreWords={scoreWords} misspeltWords={misspeltWords} />
+      )}
     </>
   );
 };
