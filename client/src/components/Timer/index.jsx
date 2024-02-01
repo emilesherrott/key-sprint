@@ -4,7 +4,6 @@ import "./Timer.css"
 
 const Timer = ({ time, setTime, timeStarted, setTimeFinished }) => {
 
-    const navigate = useNavigate()
     useEffect(() => {
         let timerInterval
         if(timeStarted) {
@@ -28,7 +27,7 @@ const Timer = ({ time, setTime, timeStarted, setTimeFinished }) => {
   return (
     <>
     <div id="components-timer-time">{time}</div>
-    <button onClick={handleClick}>Restart</button>
+    {/* <button onClick={handleClick}>Restart</button> */}
     </>
   )
 }

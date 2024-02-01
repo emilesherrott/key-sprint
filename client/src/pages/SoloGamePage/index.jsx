@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import { Timer, SoloEndGameResults } from "../../components";
 
 import "./SoloGamePage.css";
 
-const SoloGamePage = ({ words }) => {
-  const [gameWords, setGameWords] = useState(words.slice(0, 5));
-  const [remainingWords, setRemainingWords] = useState(words.slice(5));
-  const [input, setInput] = useState("");
-  const [scoreWords, setScoreWords] = useState(0);
-  const [misspeltWords, setMisspeltWords] = useState(0);
+const SoloGamePage = ({ words, gameWords, setGameWords, scoreWords, setScoreWords, misspeltWords, setMisspeltWords, time, setTime, timeStarted, setTimeStarted, timeFinished, setTimeFinished }) => {
 
-  const [time, setTime] = useState(60);
-  const [timeStarted, setTimeStarted] = useState(false);
-  const [timeFinished, setTimeFinished] = useState(false);
+  const [remainingWords, setRemainingWords] = useState([]);
+  const [input, setInput] = useState("");
+
+  useEffect(() => {
+    setGameWords(words.slice(0,5))
+    setRemainingWords(words.slice(5))
+  }, [words])
 
   const handleChange = (event) => {
     setTimeStarted(true);
@@ -25,7 +24,7 @@ const SoloGamePage = ({ words }) => {
 
   const handleKeyDown = (event) => {
     if (time > 0) {
-      if (event.key === " ") {
+      if (event.key === " ") { 
         let submission = event.target.value;
         if (submission === gameWords[0]) {
           setScoreWords((prevState) => prevState + 1);
